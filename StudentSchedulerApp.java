@@ -10,6 +10,7 @@ public class StudentSchedulerApp {
     }
 }
 
+// ---------------- LOGIN PAGE ----------------
 class LoginPage extends JFrame {
 
     JTextField emailField;
@@ -80,6 +81,7 @@ class LoginPage extends JFrame {
     }
 }
 
+// ---------------- SIGNUP PAGE ----------------
 class SignupPage extends JFrame {
 
     JTextField nameField;
@@ -162,6 +164,9 @@ class SignupPage extends JFrame {
 
 class SchedulePage extends JFrame {
 
+    JTable table;
+    DefaultTableModel tableModel;
+
     SchedulePage() {
         setTitle("My Schedule");
         setSize(550, 350);
@@ -173,6 +178,7 @@ class SchedulePage extends JFrame {
         title.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
 
         String[] columns = {"Course", "Section", "Day", "Time", "Room"};
+        
         String[][] data = {
                 {"CCS", "BSIT2C", "Mon/Thu", "5:30PM–7:30PM", "402"},
                 {"HCI", "BSIT2C", "Mon/Thu", "11:30AM–1:00PM", "203"},
@@ -180,7 +186,8 @@ class SchedulePage extends JFrame {
                 {"MATH", "BSIT2C", "Mon", "7:30–9:00AM", "102"}
         };
 
-        JTable table = new JTable(new DefaultTableModel(data, columns));
+        tableModel = new DefaultTableModel(data, columns);
+        table = new JTable(tableModel);
         JScrollPane scroll = new JScrollPane(table);
 
         JButton addBtn = new JButton("Add Schedule");
@@ -194,8 +201,63 @@ class SchedulePage extends JFrame {
         add(scroll, BorderLayout.CENTER);
         add(bottomPanel, BorderLayout.SOUTH);
 
+        addBtn.addActionListener(e -> showAddScheduleDialog());
+
         setLocationRelativeTo(null);
         setVisible(true);
     }
 
+    private void showAddScheduleDialog() {
+        
+        JDialog addScheduleDialog = new JDialog(this, "Add Schedule", true);
+        addScheduleDialog.setSize(300, 250);
+        addScheduleDialog.setLayout(new GridLayout(6, 2));
+
+        JLabel courseLabel = new JLabel("Course:");
+        JTextField courseField = new JTextField();
+        JLabel sectionLabel = new JLabel("Section:");
+        JTextField sectionField = new JTextField();
+        JLabel dayLabel = new JLabel("Day:");
+        JTextField dayField = new JTextField();
+        JLabel timeLabel = new JLabel("Time:");
+        JTextField timeField = new JTextField();
+        JLabel roomLabel = new JLabel("Room:");
+        JTextField roomField = new JTextField();
+
+        JButton submitBtn = new JButton("Add");
+        JButton cancelBtn = new JButton("Cancel");
+        
+        addScheduleDialog.add(courseLabel);
+        addScheduleDialog.add(courseField);
+        addScheduleDialog.add(sectionLabel);
+        addScheduleDialog.add(sectionField);
+        addScheduleDialog.add(dayLabel);
+        addScheduleDialog.add(dayField);
+        addScheduleDialog.add(timeLabel);
+        addScheduleDialog.add(timeField);
+        addScheduleDialog.add(roomLabel);
+        addScheduleDialog.add(roomField);
+        addScheduleDialog.add(submitBtn);
+        addScheduleDialog.add(cancelBtn);
+        
+        submitBtn.addActionListener(submitEvent -> {
+            
+            String course = courseField.getText();
+            String section = sectionField.getText();
+            String day = dayField.getText();
+            String time = timeField.getText();
+            String room = roomField.getText();
+
+            tableModel.addRow(new Object[]{course, section, day, time, room});
+
+            addScheduleDialog.dispose();
+        });
+
+        cancelBtn.addActionListener(cancelEvent -> {
+            addScheduleDialog.dispose();
+        });
+
+        addScheduleDialog.setLocationRelativeTo(this);
+        addScheduleDialog.setVisible(true);
+    }
 }
