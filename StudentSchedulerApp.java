@@ -10,7 +10,6 @@ public class StudentSchedulerApp {
     }
 }
 
-// ---------------- LOGIN PAGE ----------------
 class LoginPage extends JFrame {
 
     JTextField emailField;
@@ -81,7 +80,6 @@ class LoginPage extends JFrame {
     }
 }
 
-// ---------------- SIGNUP PAGE ----------------
 class SignupPage extends JFrame {
 
     JTextField nameField;
@@ -162,7 +160,6 @@ class SignupPage extends JFrame {
     }
 }
 
-// ---------------- SCHEDULE PAGE ----------------
 class SchedulePage extends JFrame {
 
     SchedulePage() {
@@ -200,4 +197,5 @@ class SchedulePage extends JFrame {
         setLocationRelativeTo(null);
         setVisible(true);
     }
+
 }
